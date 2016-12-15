@@ -1,8 +1,6 @@
 from urllib.request import urlopen
 import json
 
-from django.core.exceptions import ObjectDoesNotExist
-
 from meetings.models import Meeting, Speaker, Tag, SessionType, Room, Category
 
 
@@ -71,3 +69,14 @@ def _ingest_speaker(speaker):
     new_speaker.linkedin_link = speaker['LinkedInProfile']
 
     new_speaker.save()
+
+
+def populate_meeting_date_and_time_fields():
+    meetings = Meeting.objects.all()
+
+    for meeting in meetings:
+        meeting.start_time = meeting.start_datetime.time()
+        meeting.end_time = meeting.end_datetime.time()
+        meeting.date = meeting.start_datetime.date()
+
+        meeting.save()

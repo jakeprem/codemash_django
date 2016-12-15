@@ -62,8 +62,12 @@ class Meeting(models.Model):
     room = models.CharField(max_length=200, null=True)
     rooms = models.ManyToManyField(Room)
 
-    start_time = models.DateTimeField(null=True)
-    end_time = models.DateTimeField(null=True)
+    start_datetime = models.DateTimeField(null=True)
+    end_datetime = models.DateTimeField(null=True)
+
+    start_time = models.TimeField(null=True)
+    end_time = models.TimeField(null=True)
+    date = models.DateField(null=True)
 
     def __str__(self):
         return self.title
