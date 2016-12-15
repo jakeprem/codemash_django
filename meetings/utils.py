@@ -21,8 +21,8 @@ def _ingest_meeting(meeting):
     new_meeting.session_time = meeting['SessionTime']
     new_meeting.save()
     new_meeting.room = meeting['Room']
-    new_meeting.start_time = meeting['SessionStartTime']
-    new_meeting.end_time = meeting['SessionEndTime']
+    new_meeting.start_datetime = meeting['SessionStartTime']
+    new_meeting.end_datetime = meeting['SessionEndTime']
 
     for speaker in meeting['Speakers']:
         new_meeting.speakers.add(speaker['Id'])
