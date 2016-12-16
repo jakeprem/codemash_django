@@ -43,7 +43,7 @@ class MeetingAdmin(admin.ModelAdmin):
 
     show_full_result_count = True
 
-    ordering = ('start_time', 'date')
+    ordering = ('date', 'start_time')
 
     def speaker_names(self, obj):
         speakers_list = []
