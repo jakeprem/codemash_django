@@ -72,3 +72,43 @@ class Meeting(models.Model):
     def __str__(self):
         return self.title
 
+
+class Schedule(models.Model):
+    title = models.CharField(max_length=100)
+    meetings = models.ManyToManyField(Meeting, through='ScheduleMeeting')
+
+    active = models.BooleanField()
+
+    def save(self, *args, **kwargs):
+        if self.active:
+            schedules = Schedule.objects.all()
+            if schedules:
+                for schedule in schedules:
+                    schedule.active = False
+                    schedule.save()
+        super(Schedule, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+
+class ScheduleMeeting(models.Model):
+    meeting = models.ForeignKey(Meeting)
+    schedule = models.ForeignKey(Schedule)
+
+    start_datetime = models.DateTimeField(unique=True)
+    end_datetime = models.DateTimeField()
+
+    def save(self, *args, **kwargs):
+        if self.meeting:
+            self.start_datetime = self.meeting.start_datetime
+            self.end_datetime = self.meeting.end_datetime
+        super(ScheduleMeeting, self).save(*args, **kwargs)
+
+    def __str__(self):
+        try:
+            return self.meeting.category.text
+        except TypeError:
+            return ''
+
+
