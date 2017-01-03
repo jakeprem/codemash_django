@@ -1,4 +1,4 @@
-Follow these commands to setup and run the server
+Follow these commands to setup and run the server (these are written for Linux)
 ```
 git clone https://gitlab.com/jakeprem/codemash_django
 cd codemash_django
